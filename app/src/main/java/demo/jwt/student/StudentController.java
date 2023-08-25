@@ -2,6 +2,8 @@ package demo.jwt.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -40,6 +42,7 @@ public class StudentController {
 
     // Get All Students
     @GetMapping("/getAllStudents")
+    @Secured({ "ROLE_SUPERSUPERADMIN" })
     public @ResponseBody Iterable<StudentEntity> getAllStudents() {
         return studentRepository.findAll();
     }

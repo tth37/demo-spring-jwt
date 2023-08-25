@@ -9,11 +9,22 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component("delegatedAuthenticationEntryPoint")
-public class DelegatedAuthenticationEntryPoint implements AuthenticationEntryPoint {
+@Component("restAuthenticationEntryPoint")
+public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+
+        System.out.println("authException: " + authException);
+
+        System.out.println(response.getStatus());
+
+        if (response.getStatus() == HttpServletResponse.SC_EXPECTATION_FAILED) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        } else {
+            response.getWriter().write("Forbidden: not privileged");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
+
     }
 }

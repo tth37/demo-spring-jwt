@@ -21,7 +21,7 @@ public class WebSecurityConfig {
     private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
-    @Qualifier("delegatedAuthenticationEntryPoint")
+    @Qualifier("restAuthenticationEntryPoint")
     AuthenticationEntryPoint authEntryPoint;
 
     @Bean
